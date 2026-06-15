@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+:root {
+  --radius: 1rem;
+  --background: #fff9ec;
+  --foreground: #1f2a52;
+  --card: #fff9ec;
+  --card-foreground: #1f2a52;
+  --popover: #fff9ec;
+  --popover-foreground: #1f2a52;
+  --primary: #d62839;
+  --primary-foreground: #fff9ec;
+  --secondary: #ffd23f;
+  --secondary-foreground: #1f2a52;
+  --muted: #f3ead8;
+  --muted-foreground: #5a6286;
+  --accent: #ffd23f;
+  --accent-foreground: #1f2a52;
+  --destructive: #c1121f;
+  --destructive-foreground: #fff9ec;
+  --border: #1f2a52;
+  --input: #c9cee2;
+  --ring: #d62839;
+}
+
+@theme inline {
+  /* shadcn token bridge */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* storybook palette */
+  --color-ink: #1f2a52;
+  --color-maple: #e63946;
+  --color-maple-deep: #d62839;
+  --color-sun: #ffd23f;
+  --color-sky: #6fc9ff;
+  --color-leaf: #58c24a;
+  --color-cream: #fff9ec;
+
+  /* typography */
+  --font-display: var(--font-baloo), ui-rounded, system-ui, sans-serif;
+  --font-sans: var(--font-nunito), ui-rounded, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  background: #6fc9ff;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Lenis smooth-scroll plumbing */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+::selection {
+  background: var(--color-sun);
+  color: var(--color-ink);
+}
+
+/* animated-movie-poster headline treatment */
+.poster-text {
+  color: var(--color-cream);
+  -webkit-text-stroke: 0.03em var(--color-ink);
+  paint-order: stroke fill;
+  /* no drop shadow — just a clean cream fill with an ink outline */
+}
+
+/* slim playful scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(31, 42, 82, 0.08);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #e63946, #f77f00);
+  border-radius: 999px;
+  border: 2px solid rgba(255, 249, 236, 0.6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+}
