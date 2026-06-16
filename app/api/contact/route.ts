@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { checkBotId } from "botid/server";
 import { Resend } from "resend";
 import {
   EMAIL_ATTACHMENTS,
@@ -17,6 +18,15 @@ interface ContactPayload {
 }
 
 export async function POST(request: Request) {
+  // Invisible bot check (Vercel BotID, Basic mode). Genuine visitors pass
+  // untouched; bots/scrapers are denied before any email is sent. A rare
+  // false-positive human still sees the form's error state, which surfaces the
+  // mailto fallback — so a real visitor is never left without a way to reach us.
+  const { isBot } = await checkBotId();
+  if (isBot) {
+    return NextResponse.json({ error: "Access denied." }, { status: 403 });
+  }
+
   let payload: ContactPayload;
   try {
     payload = await request.json();

@@ -3,7 +3,7 @@
 
 ## Summary
 - 🔴 Critical issues: 0
-- 🟡 Important issues: 1
+- 🟡 Important issues: 1 (✅ resolved — see below)
 - 🔵 Nice-to-have improvements: 4
 
 **Overall verdict: Ready to ship.** No critical or build-blocking problems. One
@@ -32,6 +32,11 @@ None.
   by IP (`x-forwarded-for`), e.g. 5 requests / 10 min → return 429.
 - *Severity note:* not launch-blocking for a low-traffic personal site, but it's the
   one hardening worth doing since the endpoint costs money/quota to abuse.
+- **✅ Resolved (2026-06-16):** Added **Vercel BotID** (Basic, invisible) on
+  `/api/contact` — bots/scrapers are denied with `403` before any email is sent, with
+  zero friction for genuine visitors; the honeypot is retained as a second layer. (A
+  rate limit could still be layered on later for raw volume, but BotID addresses the
+  spam-content problem directly.)
 
 ---
 
