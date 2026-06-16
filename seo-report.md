@@ -15,6 +15,7 @@ the hand-tuned 3D storybook (see Recommendations).
 | Structured data | `components/seo/json-ld.tsx` | `@graph` injected site-wide in the layout. |
 | Sitemap | `app/sitemap.ts` | → `/sitemap.xml` |
 | Robots | `app/robots.ts` | → `/robots.txt`, allows all (incl. AI bots), blocks `/api/` |
+| AI summary | `app/llms.txt/route.ts` | → `/llms.txt` (llmstxt.org) — factual Markdown profile for answer engines, generated from `lib/site.ts`. |
 | Social image | `app/opengraph-image.tsx` + `app/twitter-image.tsx` | Dynamic 1200×630 branded card via `next/og` (storybook palette). |
 
 ## Structured data (JSON-LD @graph)
