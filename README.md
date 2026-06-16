@@ -1,62 +1,75 @@
-# Nishant — Portfolio ("The Pop-Up Storybook")
+# Pop-Up Storybook — 3D Portfolio
 
-A single-screen, scroll-driven 3D storybook portfolio. One fixed WebGL canvas sits
-behind the page; as you scroll, paper-toy scenes pop out of the ground, the sky
-shifts from morning to night, and a chibi avatar travels through the story —
-education → craft → a cross-Canada road trip → Newfoundland → a campfire contact
-scene. Every 3D asset is procedural (no model or texture downloads).
+A single-page, scroll-driven **3D portfolio** built as an interactive "pop-up
+storybook." One fixed WebGL canvas sits behind the page; as you scroll, paper-toy
+scenes rise from the ground, the sky shifts from morning to night, and a character
+travels through the story.
 
-See `design-spec.md` for the full art direction.
+<p align="center">
+  <img src="docs/screenshot.png" alt="The 3D storybook portfolio — hero scene" width="820" />
+</p>
 
-## Stack
+## Features
 
-- Next.js (App Router) + TypeScript
-- Tailwind CSS v4 + shadcn/ui (form controls)
-- react-three-fiber + drei (3D), GSAP ScrollTrigger (DOM scrub), Lenis (smooth scroll)
-- Resend (contact form delivery, via REST)
+- 🎬 Single fixed `react-three-fiber` canvas with scroll-driven chapters
+- 🪄 Smooth scrolling (Lenis) + GSAP ScrollTrigger scrubbing
+- 🔎 Full SEO/GEO layer — JSON-LD structured data, `sitemap.xml`, `robots.txt`,
+  dynamic OpenGraph image, and an `llms.txt` for AI answer engines
+- ♿ Server-rendered content, semantic HTML, mobile-first responsive design
+- ✉️ Contact form with email delivery via Resend
 
-## Run
+## Tech stack
+
+- **Framework:** Next.js (App Router) + TypeScript
+- **Styling:** Tailwind CSS v4 + shadcn/ui
+- **3D:** Three.js via react-three-fiber + drei
+- **Motion:** GSAP ScrollTrigger, Lenis (smooth scroll)
+- **Email:** Resend
+- **Hosting:** Vercel
+
+## Getting started
 
 ```bash
 npm install
 npm run dev      # http://localhost:3000
 npm run build    # production build
+npm run start    # serve the production build
 ```
 
-## Things to update (placeholders)
+## Environment variables
 
-| What | Where |
-| --- | --- |
-| Education schools + years (`[University Name]`, `[20XX – 20XX]`) | `lib/site.ts` |
-| Social URLs (`your-handle`) | `lib/site.ts` |
-| Name / role / tagline / email | `lib/site.ts` |
-| Chapter pacing (section heights drive everything) | `lib/scroll.ts` → `CHAPTERS` |
-| Colours / fonts | `app/globals.css`, `app/layout.tsx` |
+Copy `.env.example` to `.env.local`. The contact form uses Resend:
 
-## Contact form
+| Variable | Required | Purpose |
+| --- | --- | --- |
+| `RESEND_API_KEY` | optional | API key for sending email |
+| `CONTACT_TO_EMAIL` | optional | Inbox that receives messages |
+| `CONTACT_FROM_EMAIL` | optional | Verified sender address |
 
-Copy `.env.example` to `.env.local` and set `RESEND_API_KEY` (+ optional
-`CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL`). Without a key the form still succeeds
-locally but skips delivery — handy for previews.
+Without a key the form still succeeds locally but skips delivery — handy for previews.
 
-## Architecture notes
+## Project structure
 
-- `lib/scroll.ts` is the single source of truth: DOM section heights and 3D scene
-  windows both derive from `CHAPTERS`, so retiming a chapter keeps everything in sync.
-- The scroll position feeds a tiny mutable store (`scrollState`), smoothed each
-  frame inside the canvas — no React re-renders during scroll.
-- `components/three/avatar.tsx` owns the character: a rigged GLB at
-  `public/models/avatar.glb` (currently an Avaturn selfie export — Mixamo rig,
-  one full-body Idle clip, its own hair/glasses/clothing). The Idle always plays;
-  only the canoe and campfire layer a procedural seated pose. Standing scenes are
-  pure idle + mouse head-tracking — intentionally calm, since a realistic human
-  reads best mostly still. Seated poses rotate bones about the character's world
-  axes (rig-agnostic), and the graduation cap + hand props portal onto bones.
-  To swap the likeness, export a new Avaturn/Mixamo-rigged GLB over that file.
-- The GLB is loaded **outside** the Canvas (`hooks/use-gltf-model.ts`) — never
-  suspend inside the R3F tree.
-- If the 3D world ever looks "frozen" during automated/browser testing: check
-  `document.visibilityState` first. Chrome suspends rAF for hidden/occluded
-  windows; the canvas freezes at its last frame with zero errors.
-- Linting: `react-hooks/immutability`/`refs` are disabled for `components/three/**`
-  because mutating cameras/materials inside `useFrame` is react-three-fiber's API.
+```
+app/          routes, layout, metadata, sitemap/robots/OG image, contact API
+components/   UI sections + three/ (the 3D scene)
+lib/          site content + scroll configuration
+hooks/        custom React hooks
+public/       static assets + 3D model
+```
+
+## How it works
+
+- `lib/scroll.ts` is the single source of truth: the DOM section heights and the 3D
+  scene windows both derive from one chapter config, so retiming a chapter keeps the
+  page and the 3D world in sync.
+- Scroll position feeds a small mutable store, smoothed every frame inside the canvas
+  — so scrolling never triggers React re-renders.
+
+## Deployment
+
+Deployed on **Vercel**. Pushes to `main` build and deploy automatically.
+
+---
+
+<sub>Built and managed by inishant.com</sub>
