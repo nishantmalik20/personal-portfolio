@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Baloo_2, Nunito } from "next/font/google";
 import Script from "next/script";
+import { JsonLd } from "@/components/seo/json-ld";
 import "./globals.css";
 
 const GTM_ID = "GTM-WDL593W8";
@@ -20,12 +21,47 @@ export const metadata: Metadata = {
   title: "Nishant · Web Designer & Developer",
   description:
     "A 3D storybook portfolio. Nishant designs, builds and manages bright, story-driven websites, end to end, from Winnipeg, Canada.",
+  keywords: [
+    "web designer Winnipeg",
+    "web developer Winnipeg",
+    "freelance web developer Manitoba",
+    "Next.js developer",
+    "React developer",
+    "AI developer Winnipeg",
+    "Nishant Malik",
+    "inishant.com",
+  ],
+  authors: [{ name: "Nishant Malik", url: "https://inishant.com" }],
+  creator: "Nishant Malik",
+  publisher: "inishant.com",
+  alternates: { canonical: "/" },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
     title: "Nishant · Web Designer & Developer",
     description:
       "Bright, story-driven websites designed, built and cared for end to end, told as a scrollable 3D storybook.",
+    url: "https://inishant.com",
+    siteName: "inishant.com",
+    locale: "en_CA",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Nishant · Web Designer & Developer",
+    description:
+      "Bright, story-driven websites designed, built and cared for end to end, told as a scrollable 3D storybook.",
+  },
+  category: "technology",
 };
 
 export const viewport: Viewport = {
@@ -40,8 +76,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${baloo.variable} ${nunito.variable}`}>
+    <html lang="en-CA" className={`${baloo.variable} ${nunito.variable}`}>
       <body className="font-sans antialiased">
+        <JsonLd />
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe
